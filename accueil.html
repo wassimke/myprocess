@@ -1,1 +1,1286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyProcess FTTH</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --or:#f60;--orh:#e55;--orbg:#fff5ee;--orbd:#ffd5b5;
+  --bl:#2563eb;--blbg:#eff6ff;--blbd:#bfdbfe;
+  --gn:#16a34a;--gnbg:#f0fdf4;--gnbd:#bbf7d0;
+  --ye:#ca8a04;--yebg:#fefce8;--yebd:#fde68a;
+  --re:#dc2626;--rebg:#fef2f2;--rebd:#fecaca;
+  --g0:#fff;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;
+  --g300:#d1d5db;--g400:#9ca3af;--g500:#6b7280;
+  --g600:#4b5563;--g700:#374151;--g800:#1f2937;--g900:#111827;
+  --r:10px;--rs:7px;--sh:0 1px 3px rgba(0,0,0,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f2f4f7;color:var(--g800);font-size:14px;line-height:1.6}
 
+/* ── HEADER ── */
+.hdr{background:#fff;border-bottom:1px solid var(--g200);padding:.75rem 1.25rem;display:flex;align-items:center;gap:.875rem;position:sticky;top:0;z-index:300;box-shadow:var(--sh)}
+.logo{display:flex;align-items:center;gap:.5rem;cursor:pointer}
+.lmark{background:var(--or);color:#fff;width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-size:.95rem;flex-shrink:0}
+.lname{font-weight:700;font-size:.9rem;color:var(--g900);letter-spacing:-.02em}
+.lname span{color:var(--or)}
+.hsep{width:1px;height:18px;background:var(--g200)}
+.hbadge{background:var(--orbg);color:var(--or);border:1px solid var(--orbd);border-radius:20px;padding:.15rem .6rem;font-size:.65rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.hclock{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--g400)}
+
+/* ── LAYOUT ── */
+.wrap{display:flex;min-height:calc(100vh - 53px)}
+
+/* ── SIDEBAR ── */
+.sb{width:220px;background:#fff;border-right:1px solid var(--g200);padding:1rem .75rem;position:sticky;top:53px;height:calc(100vh - 53px);overflow-y:auto;flex-shrink:0}
+.sb-sec{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--g400);padding:.2rem .5rem;margin:.875rem 0 .3rem}
+.sb-sec:first-child{margin-top:0}
+.ni{display:flex;align-items:center;gap:.45rem;padding:.42rem .55rem;border-radius:var(--rs);cursor:pointer;font-size:.78rem;color:var(--g600);transition:.1s;border:1px solid transparent;white-space:nowrap}
+.ni:hover{background:var(--g50);color:var(--g800)}
+.ni.on{background:var(--orbg);border-color:var(--orbd);color:var(--or);font-weight:600}
+.ni-ic{font-size:.75rem;width:15px;text-align:center;flex-shrink:0}
+.sd{border:none;border-top:1px solid var(--g100);margin:.4rem 0}
+
+/* ── MAIN ── */
+.main{flex:1;padding:1.5rem;overflow-y:auto}
+
+/* ── PAGE HEADER ── */
+.ph{margin-bottom:1.25rem}
+.ph-title{font-size:1.2rem;font-weight:700;color:var(--g900);letter-spacing:-.02em}
+.ph-sub{font-size:.78rem;color:var(--g500);margin-top:.15rem}
+
+/* ── CARDS GRID ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem}
+
+/* ── GENERIC CARD ── */
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:1.125rem}
+.card-h{font-weight:700;font-size:.85rem;color:var(--g800);margin-bottom:.625rem;display:flex;align-items:center;gap:.4rem}
+.card-h span{font-size:.9rem}
+
+/* ── ACCUEIL ── */
+.welcome{background:linear-gradient(135deg,var(--or) 0%,#ff8533 100%);border-radius:var(--r);padding:1.375rem 1.5rem;color:#fff;margin-bottom:1rem}
+.wt{font-size:1.05rem;font-weight:700;margin-bottom:.3rem}
+.ws{font-size:.8rem;opacity:.9;line-height:1.6}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1rem}
+.qcard{background:#fff;border:1.5px solid var(--g200);border-radius:var(--r);padding:.875rem .875rem;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:.3rem}
+.qcard:hover{border-color:var(--or);box-shadow:0 3px 12px rgba(255,102,0,.1);transform:translateY(-2px)}
+.qe{font-size:1.25rem}
+.qn{font-weight:700;font-size:.82rem;color:var(--g800)}
+.qd{font-size:.72rem;color:var(--g500)}
+.qtag{display:inline-block;margin-top:.1rem;background:var(--g100);color:var(--g500);padding:.08rem .45rem;border-radius:20px;font-size:.62rem;font-weight:600}
+.info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+.icard{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:.875rem 1rem}
+.ic-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.15rem .5rem;border-radius:4px;margin-bottom:.5rem}
+.ic-badge.or{background:var(--orbg);color:var(--or)}
+.ic-badge.bl{background:var(--blbg);color:var(--bl)}
+.ic-badge.gn{background:var(--gnbg);color:var(--gn)}
+.ic-badge.ye{background:var(--yebg);color:var(--ye)}
+.ic-badge.re{background:var(--rebg);color:var(--re)}
+.ic-t{font-weight:700;font-size:.82rem;color:var(--g800);margin-bottom:.3rem}
+.ic-rows .r{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;padding:.3rem 0;border-bottom:1px solid var(--g100);font-size:.78rem}
+.ic-rows .r:last-child{border:none}
+.ic-rows .r .lbl{color:var(--g600)}
+.ic-rows .r .val{font-weight:600;color:var(--g800);text-align:right;font-family:'JetBrains Mono',monospace;font-size:.73rem}
+.ic-rows .r .val.or{color:var(--or)}
+.ic-rows .r .val.gn{color:var(--gn)}
+.ic-rows .r .val.re{color:var(--re)}
+.voyants-ref{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+.vref{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:.875rem 1rem}
+.vref-t{font-weight:700;font-size:.8rem;color:var(--g800);margin-bottom:.5rem;display:flex;align-items:center;gap:.3rem}
+.vlist .vi{display:flex;align-items:center;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid var(--g100);font-size:.76rem}
+.vlist .vi:last-child{border:none}
+.vlist .vi .vn{color:var(--g600)}
+.vdot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:.3rem;flex-shrink:0}
+.vdot.on{background:var(--gn)}
+.vdot.off{background:var(--g300)}
+.vdot.blink{background:var(--bl);animation:blk .8s ease infinite alternate}
+.vdot.red{background:var(--re)}
+@keyframes blk{to{opacity:.2}}
+.vs{font-size:.7rem;font-weight:600}
+.vs.ok{color:var(--gn)}
+.vs.ko{color:var(--g400)}
+.vs.bl{color:var(--bl)}
+.vs.red{color:var(--re)}
+
+/* ── DÉLAIS PAGE ── */
+.delais-intro{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1rem}
+.delais-intro p{font-size:.82rem;color:var(--g600);line-height:1.7}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:.875rem;margin-bottom:1rem}
+.dcard{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:1rem 1.125rem}
+.dcard-h{font-weight:700;font-size:.82rem;color:var(--g800);margin-bottom:.625rem;padding-bottom:.5rem;border-bottom:2px solid var(--g100);display:flex;align-items:center;gap:.4rem}
+.dcard-h.or{border-color:var(--or)}
+.dcard-h.bl{border-color:var(--bl)}
+.dtable{width:100%;border-collapse:collapse;font-size:.76rem}
+.dtable th{text-align:left;color:var(--g400);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;padding:.3rem .2rem;border-bottom:1px solid var(--g200)}
+.dtable td{padding:.4rem .2rem;border-bottom:1px solid var(--g100);color:var(--g700);vertical-align:top}
+.dtable tr:last-child td{border:none}
+.dtable .d{font-weight:700;font-family:'JetBrains Mono',monospace}
+.dtable .d.or{color:var(--or)}
+.dtable .d.bl{color:var(--bl)}
+.dtable .d.gn{color:var(--gn)}
+.dtable .d.re{color:var(--re)}
+.dtable .d.ye{color:var(--ye)}
+.files-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem;margin-bottom:1rem}
+.fcard{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:.75rem .875rem}
+.fcard-t{font-weight:700;font-size:.75rem;color:var(--g800);margin-bottom:.35rem;font-family:'JetBrains Mono',monospace}
+.fcard-d{font-size:.72rem;color:var(--g500);line-height:1.5}
+.fcard-dl{display:inline-block;margin-top:.3rem;font-size:.7rem;font-weight:700;padding:.1rem .4rem;border-radius:3px}
+.fcard-dl.or{background:var(--orbg);color:var(--or)}
+.fcard-dl.bl{background:var(--blbg);color:var(--bl)}
+.fcard-dl.re{background:var(--rebg);color:var(--re)}
+.fcard-dl.gn{background:var(--gnbg);color:var(--gn)}
+.tip-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.tip{background:#fff;border:1px solid var(--g200);border-left:3px solid var(--or);border-radius:var(--r);padding:.75rem 1rem;font-size:.78rem;color:var(--g600);line-height:1.6}
+.tip strong{color:var(--g800)}
+
+/* ── DIAGNOSTIC ── */
+.prog-wrap{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:.875rem 1.125rem;margin-bottom:1rem;display:none}
+.prog-wrap.show{display:block}
+.pm{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:.4rem}
+.pl{color:var(--g600);font-weight:500}
+.pp{color:var(--or);font-weight:700;font-family:'JetBrains Mono',monospace}
+.pt{height:4px;background:var(--g100);border-radius:10px;overflow:hidden;margin-bottom:.5rem}
+.pf{height:100%;background:linear-gradient(90deg,var(--or),#ff8533);border-radius:10px;width:0%;transition:width .3s ease}
+.pdots{display:flex;gap:3px}
+.pdot{flex:1;height:3px;border-radius:10px;background:var(--g100)}
+.pdot.done{background:var(--or)}
+.pdot.cur{background:#ffb380}
+.diag-cat-intro{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1rem}
+.diag-cat-t{font-weight:700;font-size:.88rem;color:var(--g800);margin-bottom:.25rem}
+.diag-cat-s{font-size:.78rem;color:var(--g500)}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+.ccard{background:#fff;border:1.5px solid var(--g200);border-radius:var(--r);padding:1rem;cursor:pointer;transition:.15s}
+.ccard:hover{border-color:var(--or);box-shadow:0 3px 12px rgba(255,102,0,.08);transform:translateY(-2px)}
+.ce{font-size:1.3rem;margin-bottom:.4rem;display:block}
+.cn{font-weight:700;font-size:.82rem;color:var(--g800);margin-bottom:.15rem}
+.cd{font-size:.72rem;color:var(--g500)}
+.ctag{display:inline-block;margin-top:.35rem;background:var(--g100);color:var(--g500);padding:.08rem .45rem;border-radius:20px;font-size:.62rem;font-weight:600}
+.step-card{background:#fff;border:1px solid var(--g200);border-radius:var(--r);overflow:hidden;margin-bottom:.875rem;animation:fu .18s ease}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sh{padding:.75rem 1.125rem;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:.625rem}
+.sn{background:var(--or);color:#fff;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.68rem;font-weight:700;flex-shrink:0}
+.st{font-weight:700;font-size:.85rem;color:var(--g800)}
+.si{margin-left:auto;font-size:.63rem;color:var(--g400);font-family:'JetBrains Mono',monospace;background:var(--g100);padding:.1rem .45rem;border-radius:3px}
+.sb2{padding:1.125rem}
+.alr{border-radius:var(--rs);padding:.625rem .875rem;margin-bottom:.875rem;font-size:.77rem;line-height:1.6;display:flex;gap:.5rem}
+.alr-i{flex-shrink:0;margin-top:.05rem}
+.alr.info{background:var(--blbg);border:1px solid var(--blbd);color:#1e40af}
+.alr.warning{background:var(--yebg);border:1px solid var(--yebd);color:#92400e}
+.alr.danger{background:var(--rebg);border:1px solid var(--rebd);color:#991b1b}
+.spe{background:var(--blbg);border-left:3px solid var(--bl);border-radius:0 var(--rs) var(--rs) 0;padding:.7rem .9rem;margin-bottom:1rem}
+.spe-l{display:inline-flex;align-items:center;gap:.25rem;background:var(--bl);color:#fff;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.1rem .45rem;border-radius:3px;margin-bottom:.3rem}
+.spe-t{font-size:.79rem;color:#1e40af;font-style:italic;line-height:1.65}
+.slbl{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--g400);margin-bottom:.45rem;display:flex;align-items:center;gap:.4rem}
+.slbl::after{content:'';flex:1;height:1px;background:var(--g100)}
+.olist{display:flex;flex-direction:column;gap:.3rem;margin-bottom:1rem}
+.opt{display:flex;align-items:flex-start;gap:.5rem;padding:.525rem .75rem;border:1px solid var(--g200);border-radius:var(--rs);cursor:pointer;transition:.1s;background:#fff;user-select:none}
+.opt:hover{border-color:var(--orbd);background:var(--orbg)}
+.opt.sel{border-color:var(--or);background:var(--orbg)}
+.ocb{width:15px;height:15px;border:1.5px solid var(--g300);border-radius:3px;flex-shrink:0;display:grid;place-items:center;transition:.1s;margin-top:.15rem}
+.opt.sel .ocb{background:var(--or);border-color:var(--or)}
+.ochk{display:none;color:#fff;font-size:.58rem;font-weight:800}
+.opt.sel .ochk{display:block}
+.ot{font-size:.79rem;color:var(--g700);line-height:1.4}
+.opt.sel .ot{color:var(--g900);font-weight:500}
+.os{font-size:.67rem;color:var(--g400);margin-top:.06rem;font-family:'JetBrains Mono',monospace}
+.opt.sel .os{color:var(--or)}
+.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem;margin-bottom:.875rem}
+.vit{border:1px solid var(--g200);border-radius:6px;padding:.4rem .35rem;text-align:center;background:#fff}
+.vn{font-size:.6rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.22rem}
+.vsel{width:100%;border:1px solid var(--g200);border-radius:4px;padding:.2rem .25rem;font-size:.68rem;font-family:inherit;background:var(--g50);color:var(--g700);cursor:pointer;outline:none}
+.vsel:focus{border-color:var(--or)}
+.clf{background:var(--g50);border:1px solid var(--g200);border-radius:var(--rs);padding:.8rem 1rem;margin-bottom:.875rem}
+.clf-t{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g600);margin-bottom:.625rem}
+.fr{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.4rem}
+.fr:last-child{margin-bottom:0}
+.fl{font-size:.71rem;font-weight:600;color:var(--g600);flex:0 0 170px;padding-top:.4rem;line-height:1.35}
+.fl.req::after{content:' *';color:var(--re)}
+.fi,.fsl,.fta{flex:1;border:1px solid var(--g200);border-radius:5px;padding:.35rem .55rem;font-size:.77rem;font-family:inherit;color:var(--g800);background:#fff;transition:.1s;outline:none}
+.fi:focus,.fsl:focus,.fta:focus{border-color:var(--or);box-shadow:0 0 0 3px rgba(255,102,0,.08)}
+.fta{min-height:46px;resize:vertical;line-height:1.5}
+.navbtns{display:flex;gap:.5rem;margin-top:1rem}
+.btn{padding:.475rem 1.1rem;border-radius:var(--rs);border:none;font-family:inherit;font-size:.79rem;font-weight:600;cursor:pointer;transition:.1s;display:inline-flex;align-items:center;gap:.3rem}
+.btn-p{background:var(--or);color:#fff}
+.btn-p:hover{background:var(--orh)}
+.btn-s{background:#fff;color:var(--g600);border:1px solid var(--g200)}
+.btn-s:hover{border-color:var(--g300);color:var(--g800)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+/* ── RÉSULTAT FINAL ── */
+.final{display:none}
+.fh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
+.fht{font-weight:700;font-size:.95rem;color:var(--g800)}
+.bcopy{background:var(--or);color:#fff;border:none;padding:.4rem .875rem;border-radius:var(--rs);font-family:inherit;font-size:.75rem;font-weight:700;cursor:pointer;transition:.1s}
+.bcopy:hover{background:var(--orh)}
+.bcopy.ok{background:var(--gn)}
+.sumrow{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:.875rem}
+.sc2{background:#fff;border:1px solid var(--g200);border-radius:var(--rs);padding:.65rem .875rem}
+.sc2-l{font-size:.63rem;color:var(--g400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.18rem}
+.sc2-v{font-weight:700;font-size:.82rem;color:var(--g800)}
+.sc2-v.or{color:var(--or)}.sc2-v.gn{color:var(--gn)}.sc2-v.bl{color:var(--bl)}
+.crmo{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r);padding:1.125rem;font-family:'JetBrains Mono',monospace;font-size:.71rem;line-height:1.85;color:var(--g600);white-space:pre-wrap;word-break:break-word}
+.crmo .H1{color:var(--or);font-weight:700}
+.crmo .H2{color:var(--bl);font-weight:600}
+.crmo .V{color:var(--gn)}
+.crmo .A{color:var(--or);font-weight:700}
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.28);z-index:500;align-items:center;justify-content:center}
+.mbg.show{display:flex}
+.mbox{background:#fff;border-radius:var(--r);padding:1.75rem;text-align:center;max-width:320px;width:90%;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--g200);border-radius:2px}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="logo" onclick="goPage('home')">
+    <div class="lmark">📡</div>
+    <div class="lname">MyProcess <span>FTTH</span></div>
+  </div>
+  <div class="hsep"></div>
+  <div class="hbadge" id="hbadge">Accueil</div>
+  <div class="hclock" id="clock">--:--:--</div>
+</header>
+
+<div class="wrap">
+  <nav class="sb">
+    <div class="sb-sec">Principal</div>
+    <div class="ni on" id="nav-home" onclick="goPage('home')"><span class="ni-ic">🏠</span>Accueil</div>
+    <div class="ni" id="nav-delais" onclick="goPage('delais')"><span class="ni-ic">⏱</span>Délais & Files</div>
+    <div class="ni" id="nav-diag" onclick="goPage('diag')"><span class="ni-ic">🔬</span>Diagnostic guidé</div>
+    <hr class="sd">
+    <div class="sb-sec">Référence rapide</div>
+    <div class="ni" id="nav-voyants" onclick="goPage('voyants')"><span class="ni-ic">💡</span>Voyants</div>
+    <div class="ni" id="nav-checklist" onclick="goPage('checklist')"><span class="ni-ic">📋</span>Checklists CRM</div>
+    <div class="ni" id="nav-codes" onclick="goPage('codes')"><span class="ni-ic">🖥</span>Codes Papyrus</div>
+  </nav>
+
+  <main class="main" id="main"></main>
+</div>
+
+<div class="mbg" id="mc">
+  <div class="mbox">
+    <div style="font-size:2rem;margin-bottom:.5rem">✅</div>
+    <div style="font-weight:700;font-size:.95rem;color:var(--g800);margin-bottom:.3rem">Checklist copiée !</div>
+    <div style="font-size:.8rem;color:var(--g500);margin-bottom:1rem">Collez dans le CRM avec <strong>Ctrl+V</strong></div>
+    <button class="btn btn-p" onclick="document.getElementById('mc').classList.remove('show')">Fermer</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+var PAGES=['home','delais','diag','voyants','checklist','codes'];
+var BADGES={home:'Accueil',delais:'Délais & Files',diag:'Diagnostic guidé',voyants:'Référence Voyants',checklist:'Checklists CRM',codes:'Codes Papyrus'};
+
+function goPage(p){
+  PAGES.forEach(function(x){
+    var el=document.getElementById('nav-'+x);
+    if(el) el.classList.toggle('on',x===p);
+  });
+  document.getElementById('hbadge').textContent=BADGES[p]||p;
+  var fn={'home':renderHome,'delais':renderDelais,'diag':renderDiag,'voyants':renderVoyants,'checklist':renderChecklist,'codes':renderCodes};
+  if(fn[p]) fn[p]();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════════
+// PAGE — ACCUEIL
+// ═══════════════════════════════════════════════
+function renderHome(){
+  document.getElementById('main').innerHTML=`
+<div class="welcome">
+  <div class="wt">👋 Bienvenue sur MyProcess FTTH</div>
+  <div class="ws">Outil de diagnostic guidé pour agents Orange · Process officiels mis à jour · Checklists CRM intégrées</div>
+</div>
+
+<div style="margin-bottom:.625rem;font-weight:700;font-size:.82rem;color:var(--g700)">🚀 Lancer un diagnostic rapide</div>
+<div class="quick-grid">
+  <div class="qcard" onclick="startFlow('partage_acces')"><div class="qe">🔌</div><div class="qn">Partage — Perte d'accès</div><div class="qd">Infra IAM / INWI</div><div class="qtag">5 étapes</div></div>
+  <div class="qcard" onclick="startFlow('partage_lenteurs')"><div class="qe">🐢</div><div class="qn">Partage — Lenteurs</div><div class="qd">Débit · microcoupures</div><div class="qtag">5 étapes</div></div>
+  <div class="qcard" onclick="startFlow('partage_install')"><div class="qe">📦</div><div class="qn">Partage — Installation</div><div class="qd">Retard · activation</div><div class="qtag">4 étapes</div></div>
+  <div class="qcard" onclick="startFlow('orange_acces')"><div class="qe">🔴</div><div class="qn">Orange — Perte d'accès</div><div class="qd">Infra 100% Orange</div><div class="qtag">5 étapes</div></div>
+  <div class="qcard" onclick="startFlow('orange_incident')"><div class="qe">⚠️</div><div class="qn">Orange — Incident collectif</div><div class="qd">Portail FTTH</div><div class="qtag">3 étapes</div></div>
+  <div class="qcard" onclick="startFlow('orange_lenteurs')"><div class="qe">📊</div><div class="qn">Orange — Lenteurs</div><div class="qd">Débit · microcoupures</div><div class="qtag">5 étapes</div></div>
+  <div class="qcard" onclick="startFlow('orange_install')"><div class="qe">🔧</div><div class="qn">Orange — Installation</div><div class="qd">APV · activation</div><div class="qtag">4 étapes</div></div>
+</div>
+
+<div style="margin-bottom:.625rem;font-weight:700;font-size:.82rem;color:var(--g700)">📌 Informations clés</div>
+<div class="info-row">
+  <div class="icard">
+    <div class="ic-badge or">⏱ Délais Orange</div>
+    <div class="ic-rows">
+      <div class="r"><span class="lbl">Installation raccordable</span><span class="val or">2j ouvrés</span></div>
+      <div class="r"><span class="lbl">Installation AUDA</span><span class="val ye">3 semaines</span></div>
+      <div class="r"><span class="lbl">Escalade DTF</span><span class="val or">24h ouvrées</span></div>
+      <div class="r"><span class="lbl">Activation post-install</span><span class="val gn">24h ouvrées</span></div>
+    </div>
+  </div>
+  <div class="icard">
+    <div class="ic-badge bl">⏱ Délais Partage</div>
+    <div class="ic-rows">
+      <div class="r"><span class="lbl">Installation standard</span><span class="val or">7–10j ouvrés</span></div>
+      <div class="r"><span class="lbl">Escalade OI</span><span class="val bl">48h ouvrées</span></div>
+      <div class="r"><span class="lbl">Escalade DTF (routeur)</span><span class="val or">24h ouvrées</span></div>
+      <div class="r"><span class="lbl">Seuil transfert ST FTTH</span><span class="val re">> 10j ouvrés</span></div>
+    </div>
+  </div>
+  <div class="icard">
+    <div class="ic-badge gn">📂 Files principales</div>
+    <div class="ic-rows">
+      <div class="r"><span class="lbl">Niveau 2</span><span class="val">BO ST FTTH B2C</span></div>
+      <div class="r"><span class="lbl">OI (Partage)</span><span class="val bl">Partage FTTH N3</span></div>
+      <div class="r"><span class="lbl">Technique Orange</span><span class="val or">DTF_FTTH_OUT</span></div>
+      <div class="r"><span class="lbl">Incident collectif</span><span class="val">NOC FIXE B2C</span></div>
+    </div>
+  </div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════
+// PAGE — DÉLAIS & FILES
+// ═══════════════════════════════════════════════
+function renderDelais(){
+  document.getElementById('main').innerHTML=`
+<div class="ph"><div class="ph-title">Délais & Files d'escalade</div><div class="ph-sub">Référence complète des délais officiels et des files CRM à utiliser</div></div>
+
+<div class="delais-intro"><p>Tous les délais sont en <strong>jours / heures ouvrées</strong>. En cas de dépassement, présenter les excuses et escalader selon la file indiquée. Le client doit toujours garder son routeur allumé et branché pendant toute intervention.</p></div>
+
+<div class="d-grid">
+  <div class="dcard">
+    <div class="dcard-h or">🟠 Infra Orange — Installation</div>
+    <table class="dtable">
+      <tr><th>Type</th><th>Délai</th><th>Action si dépassement</th></tr>
+      <tr><td>Zone raccordable</td><td class="d or">2j ouvrés</td><td>Escalade DTF</td></tr>
+      <tr><td>Zone AUDA (INWI)</td><td class="d ye">3 semaines</td><td>Informer + patienter</td></tr>
+      <tr><td>Activation post-install</td><td class="d gn">24h ouvrées</td><td>Escalade DTF</td></tr>
+      <tr><td>RDV non honoré</td><td class="d">—</td><td>Escalade DTF immédiate</td></tr>
+      <tr><td>Dossier incomplet</td><td class="d bl">48h</td><td>Escalade LDF</td></tr>
+    </table>
+  </div>
+  <div class="dcard">
+    <div class="dcard-h or">🟠 Infra Orange — Dérangement</div>
+    <table class="dtable">
+      <tr><th>Type</th><th>Délai</th><th>Action si dépassement</th></tr>
+      <tr><td>Escalade DTF (accès)</td><td class="d or">24h ouvrées</td><td>Présenter excuses + note</td></tr>
+      <tr><td>Escalade DTF (lenteurs)</td><td class="d or">48h ouvrées</td><td>Relancer DTF</td></tr>
+      <tr><td>Case DTF < 24h</td><td class="d gn">En cours</td><td>Rassurer + dépannage</td></tr>
+      <tr><td>Case DTF > 24h</td><td class="d re">Dépassé</td><td>Excuses + dépannage</td></tr>
+      <tr><td>Incident collectif</td><td class="d">Pas de délai</td><td>SMS à résolution</td></tr>
+    </table>
+  </div>
+  <div class="dcard">
+    <div class="dcard-h bl">🔵 Partage FTTH — Installation</div>
+    <table class="dtable">
+      <tr><th>Type</th><th>Délai</th><th>Action</th></tr>
+      <tr><td>Installation standard</td><td class="d or">7–10j ouvrés</td><td>< 10j → rassurer N1</td></tr>
+      <tr><td>Dépassement délai</td><td class="d re">> 10j ouvrés</td><td>Transfert ST FTTH</td></tr>
+      <tr><td>Insistance client</td><td class="d">—</td><td>Transfert ST FTTH</td></tr>
+    </table>
+  </div>
+  <div class="dcard">
+    <div class="dcard-h bl">🔵 Partage FTTH — Dérangement</div>
+    <table class="dtable">
+      <tr><th>Type</th><th>Délai</th><th>Action si dépassement</th></tr>
+      <tr><td>Escalade OI</td><td class="d bl">48h ouvrées</td><td>Relancer OI</td></tr>
+      <tr><td>Escalade DTF (routeur)</td><td class="d or">24h ouvrées</td><td>Relancer DTF</td></tr>
+      <tr><td>Case Outbound suspendu</td><td class="d ye">< 5j → relance</td><td>> 5j → nouveau case</td></tr>
+      <tr><td>Case Outbound traité</td><td class="d gn">< 5j → réouvrir</td><td>> 5j → nouveau case</td></tr>
+      <tr><td>RDV Outbound</td><td class="d">J+2 ouvré</td><td>08:00–16:00</td></tr>
+    </table>
+  </div>
+</div>
+
+<div style="margin-bottom:.625rem;font-weight:700;font-size:.82rem;color:var(--g700)">📂 Files d'escalade CRM</div>
+<div class="files-grid">
+  <div class="fcard"><div class="fcard-t">BO ST FTTH B2C</div><div class="fcard-d">Niveau 2 obligatoire avant toute escalade niveau 3</div><div class="fcard-dl or">Niveau 2</div></div>
+  <div class="fcard"><div class="fcard-t">Partage FTTH N3</div><div class="fcard-d">Escalade OI (IAM/INWI) pour dérangements Partage</div><div class="fcard-dl bl">48h — OI</div></div>
+  <div class="fcard"><div class="fcard-t">DTF_FTTH_OUT</div><div class="fcard-d">Technique Orange — accès, lenteurs, installation</div><div class="fcard-dl or">24–48h</div></div>
+  <div class="fcard"><div class="fcard-t">NOC FIXE B2C</div><div class="fcard-d">Incidents collectifs réseau Orange uniquement</div><div class="fcard-dl re">Pas de délai</div></div>
+  <div class="fcard"><div class="fcard-t">DTF (Orange accès)</div><div class="fcard-d">Dérangement accès infra Orange — path simplifié</div><div class="fcard-dl or">24h</div></div>
+  <div class="fcard"><div class="fcard-t">LDF</div><div class="fcard-d">Dossiers incomplets ou en attente activation</div><div class="fcard-dl bl">48h</div></div>
+  <div class="fcard"><div class="fcard-t">BU Fixe B2C</div><div class="fcard-d">Infos erronées, adresse, annulation, doublon</div><div class="fcard-dl bl">48h</div></div>
+</div>
+
+<div style="margin-bottom:.625rem;font-weight:700;font-size:.82rem;color:var(--g700)">💡 Points importants à retenir</div>
+<div class="tip-grid">
+  <div class="tip">⚠️ <strong>Secteur AUDA</strong> : Zone FTTH opérée par INWI. Délai de <strong>3 semaines</strong>. Vérifier systématiquement dans APV/Orange Shop avant de traiter.</div>
+  <div class="tip">🔄 <strong>Routeur F660</strong> (Orange) : Proposer systématiquement un échange en agence <strong>gratuitement</strong> sous engagement de 12 mois.</div>
+  <div class="tip">🔌 <strong>Compte default Papyrus</strong> (Partage) : Si le client est connecté en compte default → escalader <strong>directement vers DTF</strong> sans effectuer aucun test de débit.</div>
+  <div class="tip">📋 <strong>Case Outbound</strong> : Toujours vérifier la présence d'un case existant avant d'en créer un nouveau. Vérifier l'historique Outbound avant réouverture.</div>
+  <div class="tip">📡 <strong>Incident collectif prioritaire</strong> : Si incident collectif ET travaux d'aménagement → <strong>prioriser les travaux d'aménagement</strong> dans le traitement.</div>
+  <div class="tip">📱 <strong>Solution dépannage</strong> : Toujours proposer une solution de dépannage (injection data mobile Orange) en cas d'escalade. Voir fiche dédiée BDC.</div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════
+// PAGE — VOYANTS
+// ═══════════════════════════════════════════════
+function renderVoyants(){
+  document.getElementById('main').innerHTML=`
+<div class="ph"><div class="ph-title">Référence Voyants</div><div class="ph-sub">États normaux et anormaux des équipements FTTH</div></div>
+<div class="voyants-ref">
+  <div class="vref">
+    <div class="vref-t">🟠 Routeur Orange — État normal</div>
+    <div class="vlist">
+      <div class="vi"><span class="vn">Power</span><span><span class="vdot on"></span><span class="vs ok">Allumé fixe</span></span></div>
+      <div class="vi"><span class="vn">PON</span><span><span class="vdot on"></span><span class="vs ok">Allumé fixe</span></span></div>
+      <div class="vi"><span class="vn">LOS</span><span><span class="vdot off"></span><span class="vs ko">Éteint</span></span></div>
+      <div class="vi"><span class="vn">Internet</span><span><span class="vdot blink"></span><span class="vs bl">Clignotant</span></span></div>
+      <div class="vi"><span class="vn">LAN</span><span><span class="vdot on"></span><span class="vs ok">Allumé (si branché)</span></span></div>
+      <div class="vi"><span class="vn">2.4G</span><span><span class="vdot blink"></span><span class="vs bl">Clignotant</span></span></div>
+      <div class="vi"><span class="vn">5G</span><span><span class="vdot blink"></span><span class="vs bl">Clignotant</span></span></div>
+      <div class="vi"><span class="vn">Phone</span><span><span class="vdot on"></span><span class="vs ok">Allumé (si branché)</span></span></div>
+    </div>
+  </div>
+  <div class="vref">
+    <div class="vref-t">🔵 ONU/ONT Partage — État normal</div>
+    <div class="vlist">
+      <div class="vi"><span class="vn">Power</span><span><span class="vdot on"></span><span class="vs ok">Allumé fixe</span></span></div>
+      <div class="vi"><span class="vn">LOS/Alarm</span><span><span class="vdot off"></span><span class="vs ko">Éteint</span></span></div>
+      <div class="vi"><span class="vn">PON</span><span><span class="vdot on"></span><span class="vs ok">Allumé fixe</span></span></div>
+      <div class="vi"><span class="vn">LAN</span><span><span class="vdot on"></span><span class="vs ok">Allumé</span></span></div>
+    </div>
+  </div>
+</div>
+<div style="margin-bottom:.625rem;font-weight:700;font-size:.82rem;color:var(--g700)">🚨 Voyants anormaux et actions</div>
+<div class="d-grid">
+  <div class="dcard">
+    <div class="dcard-h or">🟠 Routeur Orange — Problèmes</div>
+    <table class="dtable">
+      <tr><th>Voyant</th><th>État anormal</th><th>Action</th></tr>
+      <tr><td>Power</td><td class="d re">Éteint</td><td>ON/OFF + rallonge + rebrancher → DTF</td></tr>
+      <tr><td>LOS</td><td class="d re">Rouge</td><td>Rebrancher câble jaune · Assistance vidéo !</td></tr>
+      <tr><td>PON</td><td class="d ye">Éteint/Clignotant</td><td>Vérifier GPON SN + RESET → DTF</td></tr>
+      <tr><td>Internet</td><td class="d re">Éteint</td><td>RESET routeur → DTF si persiste</td></tr>
+    </table>
+  </div>
+  <div class="dcard">
+    <div class="dcard-h bl">🔵 ONU/ONT Partage — Problèmes</div>
+    <table class="dtable">
+      <tr><th>Voyant</th><th>État anormal</th><th>Action</th></tr>
+      <tr><td>Power ONU</td><td class="d re">Éteint</td><td>Vérifier rallonge → escalade OI · ONU HORS SERVICE</td></tr>
+      <tr><td>LOS/Alarm</td><td class="d re">Rouge</td><td>Vérifier jarretière (ONU + prise) → OI · PAS DE SIGNAL</td></tr>
+      <tr><td>PON ONU</td><td class="d ye">Éteint/Clignotant</td><td>Escalade OI directe · PROBLEM AUTORISATION</td></tr>
+      <tr><td>Power routeur</td><td class="d re">Éteint (ONU OK)</td><td>Vérifier alim + rallonge → DTF · 24h</td></tr>
+      <tr><td>Internet routeur</td><td class="d ye">Éteint (ONU OK)</td><td>Vérifier LAN4 + RESET → OI ou DTF</td></tr>
+    </table>
+  </div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════
+// PAGE — CHECKLISTS CRM
+// ═══════════════════════════════════════════════
+function renderChecklist(){
+  var sections=[
+    {t:'🟠 Infra Orange — Accès (Power éteint)',f:[
+      'SIP :','Nom et Prénom :','Contact :','Adresse :',
+      'Description : Le routeur ne s\'allume plus malgré la vérification du branchement',
+      'Date d\'incident :','GPON SN :',
+      'Voyants — Power : Éteint | PON : - | LOS : - | Internet : -',
+      'Commentaire : Client informé sur le délai de prise en charge (24h)'
+    ]},
+    {t:'🟠 Infra Orange — Accès (LOS rouge)',f:[
+      'SIP :','Nom et Prénom :','Contact :','Adresse :',
+      'Description : Ligne HS, aucun signal malgré vérification câble jaune côté routeur et PTO',
+      'Date d\'incident :','GPON SN :',
+      'Voyants — Power : Allumé | LOS : Rouge | PON : - | Internet : -',
+      'Commentaire : Client invité à garder routeur allumé et branché'
+    ]},
+    {t:'🟠 Infra Orange — Accès (PON éteint/clignotant)',f:[
+      'SIP :','Nom et Prénom :','Contact :','Adresse :',
+      'Description : Ligne HS, aucune session internet malgré RESET',
+      'Date d\'incident :','GPON SN :',
+      'Voyants — Power : Allumé | PON : Éteint/Clignotant | LOS : Éteint | Internet : -',
+      'Commentaire : Client invité à garder routeur allumé et branché'
+    ]},
+    {t:'🟠 Infra Orange — Lenteurs (WiFi)',f:[
+      'SIP :','NDC :','Adresse :','Nature de panne : Lenteurs de débit',
+      'Date début incident :','Offre du client :',
+      'Résultat test débit Papyrus :','Résultat test débit client :',
+      'Mode de liaison : WIFI','Nb terminaux impactés :',
+      'Élimination point d\'accès :','Séparation de réseaux : Oui / Déjà séparés',
+      'Reset du routeur : Oui / Pas nécessaire','Changement de canal : Oui / Pas nécessaire',
+      'Commentaire : Client invité à garder routeur allumé et branché'
+    ]},
+    {t:'🟠 Infra Orange — Lenteurs (Câble Ethernet)',f:[
+      'SIP :','NDC :','Adresse :','Nature de panne : Lenteurs de débit',
+      'Date début incident :','Offre du client :',
+      'Résultat test débit Papyrus :','Résultat test débit client :',
+      'Mode de liaison : Câble Ethernet','Nb terminaux impactés :',
+      'Élimination point d\'accès :','Test autre câble RJ45 :',
+      'Test autres ports LAN :','Reset du routeur : Oui / Pas nécessaire',
+      'Commentaire : Client invité à garder routeur allumé et branché'
+    ]},
+    {t:'🟠 Infra Orange — Microcoupures (Boot répétitif)',f:[
+      'SIP :','NDC :','Adresse :','Nature de panne : Microcoupures · Boot répétitif routeur',
+      'Date début incident :','Utilisation de rallonge :','Test autre prise électrique :',
+      'Reset du routeur :','Commentaire : Client invité à garder routeur allumé et branché'
+    ]},
+    {t:'🟠 Infra Orange — Installation (Retard)',f:[
+      'SIP :','NDC :','Adresse :',
+      'Description : Client réclame le retard d\'installation',
+      'Étape de traitement :','Date de création APV :',
+      'Raison de blocage :','Commentaire :'
+    ]},
+    {t:'🟠 Infra Orange — Installation (RDV non honoré)',f:[
+      'SIP :','NDC :','Adresse :',
+      'Description : Client signale un RDV d\'installation non honoré',
+      'Étape de traitement :','Date de création APV :',
+      'Date du RDV :','Commentaire :'
+    ]},
+    {t:'🟠 Infra Orange — Test d\'acceptance',f:[
+      'SIP :','NDC :','Adresse :',
+      'Description : Client réclame la non-activation malgré l\'installation',
+      'Étape de traitement :','Date de l\'installation :',
+      'MAC :','GPON SN :','Commentaire :'
+    ]},
+    {t:'🔵 Partage FTTH — Accès (Power ONU éteint)',f:[
+      'Description : L\'ONU/ONT ne s\'allume plus',
+      'Date d\'incident :',
+      'Voyants ONU — Power : Éteint | LOS/Alarm : - | PON : -',
+      'Manipulation : Vérification branchement effectuée, rallonge éliminée',
+      'Commentaire : Client informé sur escalade OI · délai 48h'
+    ]},
+    {t:'🔵 Partage FTTH — Accès (LOS/Alarm rouge)',f:[
+      'Description : Aucun signal sur l\'ONU/ONT',
+      'Date d\'incident :',
+      'Voyants ONU — Power : Allumé | LOS/Alarm : Rouge | PON : -',
+      'Voyants Routeur — Power : | PON : | LOS : | Internet : | 2.4G : | 5G : | Phone :',
+      'Manipulation : Vérification branchement jarretière côté ONU et prise optique',
+      'Commentaire : Client informé sur escalade OI · délai 48h'
+    ]},
+    {t:'🔵 Partage FTTH — Accès (PON ONU éteint/clignotant)',f:[
+      'Description : Aucun signal sur l\'ONU/ONT',
+      'Date d\'incident :',
+      'Voyants ONU — Power : Allumé | LOS/Alarm : Éteint | PON : Éteint/Clignotant',
+      'Voyants Routeur — Power : | PON : | LOS : | Internet : | 2.4G : | 5G : | Phone :',
+      'Commentaire : Client informé sur escalade OI · délai 48h'
+    ]},
+    {t:'🔵 Partage FTTH — Accès (Internet routeur éteint)',f:[
+      'SIP :','Nom et Prénom :','Contact :','Adresse :',
+      'Description : Le voyant internet ne s\'allume pas côté routeur malgré bon branchement RJ45 LAN4',
+      'Date d\'incident :','GPON SN :',
+      'Voyants ONU — Power : Allumé | LOS/Alarm : Éteint | PON : Allumé fixe',
+      'Voyants Routeur — Power : Allumé | PON : Allumé | LOS : Éteint | Internet : Éteint',
+      'Commentaire : Client informé sur délai de prise en charge'
+    ]},
+    {t:'🔵 Partage FTTH — Lenteurs (WiFi)',f:[
+      'SIP :','NDC :','Adresse :','Nature de panne : Lenteurs de débit',
+      'Date début incident :','Offre du client :',
+      'Résultat test débit Papyrus :','Résultat test débit client :',
+      'Mode de liaison : WIFI','Nb terminaux impactés :',
+      'Élimination point d\'accès :','Séparation de réseaux : Oui / Déjà séparés',
+      'Reset du routeur : Oui / Pas nécessaire','Changement de canal : Oui / Pas nécessaire',
+      'Commentaire : Client invité à garder routeur allumé et branché'
+    ]},
+    {t:'🔵 Partage FTTH — Lenteurs (Câble)',f:[
+      'SIP :','NDC :','Adresse :','Nature de panne : Lenteurs de débit',
+      'Date début incident :','Offre du client :',
+      'Résultat test débit Papyrus :','Résultat test débit client :',
+      'Mode de liaison : Câble Ethernet','Nb terminaux impactés :',
+      'Élimination point d\'accès :','Test autre câble RJ45 :',
+      'Test autres ports LAN du routeur :','Reset du routeur : Oui / Pas nécessaire',
+      'Commentaire : Client invité à garder routeur allumé et branché'
+    ]},
+  ];
+  var h=`<div class="ph"><div class="ph-title">Checklists CRM</div><div class="ph-sub">Sélectionnez un modèle, remplissez les champs et copiez dans le CRM</div></div>`;
+  h+=`<div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem">`;
+  sections.forEach(function(s,i){h+=`<button onclick="showCL(${i})" id="clb${i}" style="background:#fff;border:1px solid var(--g200);border-radius:6px;padding:.3rem .7rem;font-size:.72rem;font-family:inherit;cursor:pointer;color:var(--g600);transition:.1s" onmouseover="this.style.borderColor='var(--or)'" onmouseout="if(!this.classList.contains('act'))this.style.borderColor='var(--g200)'">${s.t.split('—')[1]?.trim()||s.t}</button>`});
+  h+=`</div><div id="cl-area"></div>`;
+  document.getElementById('main').innerHTML=h;
+  window._clData=sections;
+}
+
+function showCL(idx){
+  var s=window._clData[idx];
+  document.querySelectorAll('[id^=clb]').forEach(function(b,i){
+    b.style.background=i===idx?'var(--orbg)':'#fff';
+    b.style.borderColor=i===idx?'var(--or)':'var(--g200)';
+    b.style.color=i===idx?'var(--or)':'var(--g600)';
+  });
+  var h=`<div class="clf" style="background:#fff;border:1px solid var(--g200)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+      <div style="font-weight:700;font-size:.82rem;color:var(--g800)">${s.t}</div>
+      <button onclick="copyCL()" class="bcopy">📋 Copier</button>
+    </div>
+    <div id="cl-fields">`;
+  s.f.forEach(function(f,i){
+    h+=`<div class="fr"><div class="fl">${f}</div><input class="fi" id="clf${i}" type="text" placeholder=""></div>`;
+  });
+  h+=`</div></div>`;
+  document.getElementById('cl-area').innerHTML=h;
+  window._clFields=s.f;
+}
+
+function copyCL(){
+  var lines=[window._clData[document.querySelectorAll('[id^=clb]').length-1]?.t||'Checklist FTTH'];
+  // Get title from active button
+  var active=document.querySelector('[id^=clb][style*="orbg"]');
+  var title=active?active.textContent:'Checklist';
+  var txt='=== '+title+' ===\n';
+  window._clFields.forEach(function(f,i){
+    var v=document.getElementById('clf'+i)?.value||'';
+    txt+=f+(v?' '+v:'')+'\n';
+  });
+  copyText(txt);
+}
+
+// ═══════════════════════════════════════════════
+// PAGE — CODES PAPYRUS
+// ═══════════════════════════════════════════════
+function renderCodes(){
+  document.getElementById('main').innerHTML=`
+<div class="ph"><div class="ph-title">Codes Événements Papyrus</div><div class="ph-sub">Journaux de périphérique — Interprétation et actions</div></div>
+<div class="dcard" style="margin-bottom:1rem">
+  <div class="dcard-h or">Codes événements — Journaux de périphérique</div>
+  <table class="dtable">
+    <tr><th>Code</th><th>Nom</th><th>Interprétation</th><th>Action si fréquent</th></tr>
+    <tr><td class="d bl">0</td><td><strong>BOOTSTRAP</strong></td><td>Reset / réinitialisation usine · nouvelle installation</td><td>Vérifier si reset non souhaité</td></tr>
+    <tr><td class="d ye">1</td><td><strong>BOOT</strong></td><td>Redémarrage routeur (physique / Karma / MAJ firmware)</td><td>Nb élevé en peu de temps → problème stabilité (surchauffe, alim, défaut matériel) → DTF</td></tr>
+    <tr><td class="d gn">2</td><td><strong>PERIODIC</strong></td><td>Communication périodique Karma → routeur (surveillance)</td><td>Fréquence élevée → peut causer microcoupures → DTF</td></tr>
+    <tr><td class="d">3</td><td><strong>SCHEDULED</strong></td><td>Opération planifiée Karma (MAJ config/firmware)</td><td>Pas une alerte SAV — juste indication MAJ en cours</td></tr>
+    <tr><td class="d or">4</td><td><strong>VALUE CHANGE</strong></td><td>Changement adresse IP du routeur</td><td>Fréquence élevée → interruptions temporaires (microcoupures) → escalade OI (Partage) ou DTF (Orange)</td></tr>
+    <tr><td class="d">6</td><td><strong>CONNECTION REQUEST</strong></td><td>Tentative réveil / demande connexion Karma</td><td>Fréquence élevée → lenteurs de connexion → DTF</td></tr>
+    <tr><td class="d bl">7</td><td><strong>TRANSFER COMPLETE</strong></td><td>Installation MAJ firmware</td><td>Si lenteurs après cet événement → firmware à l'origine de la dégradation → DTF</td></tr>
+  </table>
+</div>
+<div style="margin-bottom:.625rem;font-weight:700;font-size:.82rem;color:var(--g700)">🎯 Arbre de décision microcoupures</div>
+<div class="d-grid">
+  <div class="dcard">
+    <div class="dcard-h or">🟠 Infra Orange — Microcoupures</div>
+    <table class="dtable">
+      <tr><th>Situation Papyrus</th><th>Traitement</th><th>File</th></tr>
+      <tr><td>BOOT répétitifs</td><td>Rallonge + autre prise + RESET</td><td class="d or">DTF si persiste</td></tr>
+      <tr><td>Changement état voyants</td><td>Vérifier jarretière + rallonge + RESET</td><td class="d or">DTF si persiste</td></tr>
+      <tr><td>VALUE CHANGE répétitifs</td><td>Escalade directe DTF</td><td class="d or">DTF</td></tr>
+    </table>
+  </div>
+  <div class="dcard">
+    <div class="dcard-h bl">🔵 Partage FTTH — Microcoupures</div>
+    <table class="dtable">
+      <tr><th>Situation Papyrus</th><th>Traitement</th><th>File</th></tr>
+      <tr><td>BOOT répétitifs</td><td>Rallonge + autre prise + RESET</td><td class="d or">DTF si persiste</td></tr>
+      <tr><td>Changement voyants sur ONU aussi</td><td>Vérifier jarretière + escalade OI</td><td class="d bl">Partage N3</td></tr>
+      <tr><td>Changement voyants routeur seul</td><td>Vérifier LAN RJ45 + RESET</td><td class="d or">DTF si persiste</td></tr>
+      <tr><td>VALUE CHANGE répétitifs</td><td>Escalade directe OI</td><td class="d bl">Partage N3</td></tr>
+    </table>
+  </div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════
+// PAGE — DIAGNOSTIC (flows)
+// ═══════════════════════════════════════════════
+var FL=null,SI=0,D={};
+
+var FD={
+partage_acces:{label:"Partage FTTH — Perte d'accès",steps:[
+{id:"prereq",title:"Prérequis",infra:"Partage FTTH",
+ alert:{t:"warning",i:"⚠️",tx:"Vérifier : infra Partage (I=IAM / W=INWI) · ligne non suspendue · pas en cours d'installation · client présent à domicile (file FO)"},
+ speech:"Bonjour, je vais commencer par vérifier votre dossier. Êtes-vous bien à votre domicile ?",
+ opts:[
+  {l:"Prérequis OK — ligne Partage active",s:"→ poursuivre"},
+  {l:"Ligne suspendue (impayé)",s:"→ informer client + inviter à régler"},
+  {l:"En cours d'installation",s:"→ basculer process Installation Partage"},
+  {l:"Client absent (file FO)",s:"→ rappeler une fois à la maison"}
+ ],
+ fields:[
+  {k:"infra",l:"Opérateur infra",t:"sel",o:["IAM (I)","INWI (W)"]},
+ ]},
+{id:"case_check",title:"Vérification case existant",infra:"Partage FTTH",
+ alert:{t:"info",i:"ℹ️",tx:"Consulter le CRM pour tout case Outbound existant avant toute action."},
+ speech:"Je consulte votre dossier pour vérifier si une réclamation est déjà en cours.",
+ opts:[
+  {l:"Outbound EN COURS",s:"→ rassurer + note + délai 48h"},
+  {l:"Outbound SUSPENDU < 5j",s:"→ vérifier motif + relancer OI + RDV J+2"},
+  {l:"Outbound SUSPENDU > 5j",s:"→ créer nouveau case + fermer l'ancien"},
+  {l:"Outbound TRAITÉ < 5j",s:"→ réouvrir si persistance"},
+  {l:"Outbound TRAITÉ > 5j",s:"→ nouveau case + fermer l'ancien"},
+  {l:"Aucun case actif",s:"→ poursuivre le traitement"}
+ ],
+ fields:[
+  {k:"cc_sit",l:"Situation case",t:"sel",o:["Outbound en cours","Outbound suspendu <5j","Outbound suspendu >5j","Outbound traité <5j","Outbound traité >5j","Aucun case actif"]},
+ ]},
+{id:"questionnement",title:"Questionnement",infra:"Partage FTTH",
+ speech:"Depuis quand votre ligne ne fonctionne plus ? Pouvez-vous décrire les voyants sur le boîtier ONU/ONT et le routeur ?",
+ fields:[
+  {k:"depuis",l:"Depuis quand",t:"txt",p:"Ex : hier 20h"},
+  {k:"desc",l:"Description client",t:"ta",p:"Ce que le client décrit..."}
+ ]},
+{id:"voyants",title:"Voyants + Manipulations",infra:"Partage FTTH",
+ alert:{t:"info",i:"💡",tx:"Normal ONU : Power ✅ LOS ❌ PON fixe ✅ | Normal Routeur : Power ✅ PON ❌ LOS ❌ Internet clignotant ✅"},
+ speech:"Décrivez-moi les voyants sur le boîtier ONU et sur votre routeur.",
+ voy:{ONU:["Power","LOS/Alarm","PON","LAN"],Routeur:["Power","PON","LOS","Internet","2.4G","5G"]},
+ opts:[
+  {l:"Cas 1 — Power ONU éteint",s:"→ rallonge → si persiste : OI · ONU HORS SERVICE · 48h"},
+  {l:"Cas 2 — LOS/Alarm ONU rouge",s:"→ jarretière (ONU + prise) → si persiste : OI · PAS DE SIGNAL · 48h"},
+  {l:"Cas 3 — PON ONU éteint/clignotant",s:"→ escalade OI directe · PROBLEM AUTORISATION · 48h"},
+  {l:"Cas 4 — Power routeur éteint",s:"→ ON/OFF + rallonge + rebrancher → DTF · 24h"},
+  {l:"Cas 5 — Internet routeur éteint",s:"→ LAN ONU + LAN4 routeur + RESET → OI ou DTF"},
+  {l:"Cas 6 — Voyants conformes",s:"→ process Navigation"}
+ ],
+ fields:[
+  {k:"cas",l:"Cas identifié",t:"sel",o:["Cas 1 — Power ONU éteint","Cas 2 — LOS rouge","Cas 3 — PON éteint","Cas 4 — Power routeur éteint","Cas 5 — Internet éteint","Cas 6 — Conformes"]},
+  {k:"manip",l:"Manipulations",t:"ta",p:"Ex : rallonge éliminée, jarretière rebranchée..."}
+ ]},
+{id:"escalade",title:"Codification CRM",infra:"Partage FTTH",
+ speech:"Je transmets votre dossier. Merci de garder votre équipement allumé et branché.",
+ opts:[
+  {l:"Service rétabli",s:"→ Résolu · N1"},
+  {l:"Escalade OI",s:"→ BO ST FTTH B2C → Partage FTTH N3 · 48h"},
+  {l:"Escalade DTF",s:"→ BO ST FTTH B2C → DTF_FTTH_OUT · 24h"}
+ ],
+ fields:[
+  {k:"action",l:"Action finale",t:"sel",o:["Résolu — clôture N1","Escalade OI — Partage FTTH N3","Escalade DTF — DTF_FTTH_OUT"],req:1},
+  {k:"type_inc",l:"Type incident Outbound",t:"sel",o:["N/A","ONU HORS SERVICE","PAS DE SIGNAL","PROBLEM AUTORISATION","MAC NON RECUE SUR LE PORT DE COLLECTE"]},
+  {k:"rdv",l:"Date RDV Outbound",t:"txt",p:"J+2 entre 08:00–16:00"},
+  {k:"tel1",l:"Tel 1",t:"txt",p:""},
+  {k:"tel2",l:"Tel 2",t:"txt",p:"= Tel1 si unique"},
+  {k:"dep",l:"Dépannage proposé",t:"sel",o:["Non","Injection data mobile Orange"]},
+  {k:"cmt",l:"Commentaire Outbound",t:"ta",p:"200 car. max"}
+ ]}
+]},
+
+partage_lenteurs:{label:"Partage FTTH — Lenteurs & Microcoupures",steps:[
+{id:"prereq",title:"Prérequis",infra:"Partage FTTH",
+ alert:{t:"warning",i:"⚠️",tx:"Vérifier : infra Partage · non suspendue · pas en cours d'installation · voyants normaux (sinon → Accès) · client à domicile"},
+ speech:"Bonjour, je vérifie votre dossier avant de commencer.",
+ opts:[{l:"Prérequis validés",s:"→ poursuivre"},{l:"Voyants anormaux",s:"→ process Accès Partage"},{l:"Ligne suspendue",s:"→ régler factures"}],
+ fields:[{k:"infra",l:"Opérateur (I/W)",t:"sel",o:["IAM (I)","INWI (W)"]}]},
+{id:"case_check",title:"Vérification case existant",infra:"Partage FTTH",
+ alert:{t:"info",i:"ℹ️",tx:"Consulter CRM avant toute action."},
+ speech:"Je vérifie si une réclamation est déjà en cours.",
+ opts:[
+  {l:"Outbound EN COURS",s:"→ rassurer + note + 48h"},
+  {l:"Outbound SUSPENDU < 5j",s:"→ relancer OI + RDV J+2"},
+  {l:"Outbound SUSPENDU > 5j",s:"→ nouveau case + fermer ancien"},
+  {l:"Outbound TRAITÉ < 5j",s:"→ réouvrir si persistance"},
+  {l:"Outbound TRAITÉ > 5j",s:"→ nouveau case + fermer ancien"},
+  {l:"Aucun case actif",s:"→ poursuivre"}
+ ],
+ fields:[{k:"cc_sit",l:"Situation case",t:"sel",o:["Outbound en cours","Outbound suspendu <5j","Outbound suspendu >5j","Outbound traité <5j","Outbound traité >5j","Aucun"]}]},
+{id:"questionnement",title:"Questionnement",infra:"Partage FTTH",
+ speech:"Les lenteurs sont-elles récentes ou permanentes ? Sur tous les appareils ? WiFi ou câble ? Avez-vous fait un test de débit ?",
+ fields:[
+  {k:"duree",l:"Récent ou permanent",t:"sel",o:["Récent","Permanent"]},
+  {k:"appareils",l:"Appareils impactés",t:"sel",o:["Un seul","Plusieurs","Tous"]},
+  {k:"mode",l:"Mode connexion",t:"sel",o:["WiFi","Câble","Les deux"]},
+  {k:"usage",l:"Usage touché",t:"txt",p:"IPTV / jeux / VPN / Tous"},
+  {k:"test_client",l:"Résultat test client",t:"txt",p:"Ex : 12 Mbps"}
+ ]},
+{id:"test",title:"Test Papyrus + Diagnostic",infra:"Partage FTTH",
+ alert:{t:"warning",i:"⚠️",tx:"Éliminer le point d'accès avant le test. Compte DEFAULT dans Papyrus → escalade DTF immédiate sans test."},
+ speech:"Je lance le test de débit depuis Papyrus. Faites aussi un test speedtest.net en câble direct sur le routeur.",
+ opts:[
+  {l:"Compte DEFAULT Papyrus",s:"→ DTF directement · sans test · DTF_FTTH_OUT"},
+  {l:"Débit NON CONFORME Papyrus",s:"→ escalade OI · Partage FTTH N3 · QUALITE · DEBIT NON CONFORME · 48h"},
+  {l:"Conforme WiFi — 1 terminal",s:"→ point d'accès + 5GHz + séparation réseaux + canal"},
+  {l:"Conforme WiFi — tous appareils",s:"→ point d'accès + saturation canal + RESET"},
+  {l:"Conforme WiFi — IPTV",s:"→ pare-feu LOW Papyrus + redémarrage"},
+  {l:"Conforme Câble — 1 équipement",s:"→ intervertir câble + autre port + RESET"},
+  {l:"Conforme Câble — plusieurs équipements",s:"→ débit partagé + migration offre → GP"},
+  {l:"Microcoupures Papyrus",s:"→ voir codes événements"}
+ ],
+ fields:[
+  {k:"res_papyrus",l:"Résultat Papyrus",t:"txt",p:"Ex : 85 Mbps"},
+  {k:"res_client",l:"Résultat client",t:"txt",p:"Ex : 10 Mbps"},
+  {k:"pt_acces",l:"Point d'accès éliminé",t:"sel",o:["Oui","N/A"]},
+  {k:"sep_res",l:"Séparation réseaux",t:"sel",o:["N/A","Oui","Déjà séparés"]},
+  {k:"reset",l:"Reset routeur",t:"sel",o:["Non","Oui","Pas nécessaire"]},
+  {k:"codes",l:"Codes événements",t:"txt",p:"Ex : VALUE CHANGE répétitifs"}
+ ]},
+{id:"conclusion",title:"Codification CRM",infra:"Partage FTTH",
+ speech:"Je vais enregistrer et transmettre votre dossier.",
+ opts:[
+  {l:"Résolu",s:"→ clôture · file par défaut"},
+  {l:"Escalade OI",s:"→ Partage FTTH N3 · DEBIT NON CONFORME ou INSTABILITE D'UN LIEN · 48h"},
+  {l:"Escalade DTF",s:"→ DTF_FTTH_OUT · 24–48h"}
+ ],
+ fields:[
+  {k:"action",l:"Action finale",t:"sel",o:["Résolu","Escalade OI — Partage FTTH N3","Escalade DTF — DTF_FTTH_OUT"],req:1},
+  {k:"titre",l:"Titre case CRM",t:"txt",p:"Ex: Réclamation|Dérangement|Débit Partage FTTH"},
+  {k:"statut",l:"Statut",t:"sel",o:["Résolu","Actif"]},
+  {k:"rdv",l:"Date RDV Outbound",t:"txt",p:"J+2 08:00–16:00"},
+  {k:"tel1",l:"Tel 1",t:"txt",p:""},{k:"tel2",l:"Tel 2",t:"txt",p:""},
+  {k:"cmt",l:"Commentaire",t:"ta",p:"200 car. max"}
+ ]}
+]},
+
+partage_install:{label:"Partage FTTH — Installation",steps:[
+{id:"prereq",title:"Identification commande",infra:"Partage FTTH",
+ alert:{t:"warning",i:"⚠️",tx:"ST FTTH : Orange Shop → 'Consulter Transaction Partage FTTH'. Si absent → 'Transactions Historiques'. GP : Opportunités récentes absentes si Partage."},
+ speech:"Bonjour, je consulte votre commande. Pouvez-vous me confirmer la date de souscription ?",
+ fields:[
+  {k:"cin",l:"N° CIN / Carte séjour",t:"txt",req:1},
+  {k:"date_souscription",l:"Date souscription",t:"txt",req:1,p:"JJ/MM/AAAA"},
+  {k:"ligne_type",l:"Type de ligne",t:"sel",o:["Active (IAM/INWI existant)","Inactive (nouvelle installation)"]},
+  {k:"tel",l:"Numéro de contact",t:"txt",p:""}
+ ]},
+{id:"questionnement",title:"Questionnement",infra:"Partage FTTH",
+ speech:"Le technicien est-il déjà passé ? L'ONU est-il installé ? Avez-vous un RDV pour le routeur ?",
+ opts:[
+  {l:"Ligne active — ONU non installé",s:"Phase 1 : installation ONU en attente"},
+  {l:"Ligne active — ONU OK, routeur en attente",s:"Phase 2 : activation en attente"},
+  {l:"Ligne inactive — prise optique non posée",s:"Phase 1 : installation complète en attente"},
+  {l:"Ligne inactive — ONU OK, routeur non livré",s:"Phase 2 : activation en attente"},
+  {l:"RDV non honoré",s:"→ traitement RDV manqué"}
+ ],
+ fields:[
+  {k:"phase",l:"Phase",t:"sel",o:["Phase 1 — Installation (prise/ONU)","Phase 2 — Activation routeur"]},
+  {k:"technicien",l:"Technicien passé ?",t:"sel",o:["Non","Oui — ONU installé","Oui — RDV non honoré"]}
+ ]},
+{id:"delai",title:"Délais",infra:"Partage FTTH",
+ alert:{t:"info",i:"⏱",tx:"Délai standard : 7–10j ouvrés. < 10j → rassurer + N1. > 10j → excuses + transfert ST FTTH (sous-statut Transféré)."},
+ speech:"Le délai standard est de 7 à 10 jours ouvrés. Je vérifie où en est votre commande.",
+ opts:[
+  {l:"< 10 jours — dans les normes",s:"→ rassurer + informer étapes + N1 clôturé"},
+  {l:"≥ 10 jours — délai dépassé",s:"→ excuses + transférer ST FTTH + sous-statut Transféré"}
+ ],
+ fields:[
+  {k:"nb_j",l:"Jours ouvrés écoulés",t:"txt",p:"Ex : 8"},
+  {k:"sit_delai",l:"Situation délai",t:"sel",o:["< 10j — dans les normes","≥ 10j — dépassé"]}
+ ]},
+{id:"codification",title:"Codification CRM",infra:"Partage FTTH",
+ speech:"J'enregistre la réclamation. Votre demande sera prise en charge.",
+ fields:[
+  {k:"titre",l:"Titre case (GP)",t:"txt",p:"Assistance|Partage FTTH|Délai Installation"},
+  {k:"phase_f",l:"Phase d'installation",t:"sel",o:["Phase 1 — Installation","Phase 2 — Activation"]},
+  {k:"sit_client",l:"Situation client",t:"ta",p:"Description de la situation"},
+  {k:"statut",l:"Statut case (GP)",t:"sel",o:["Résolu","Actif — transféré ST FTTH"]}
+ ]}
+]},
+
+orange_acces:{label:"Orange (infra propre) — Perte d'accès",steps:[
+{id:"prereq",title:"Prérequis",infra:"Infra Orange",
+ alert:{t:"warning",i:"⚠️",tx:"Vérifier : infra 100% Orange · non suspendue · pas en installation · déjà fonctionnée · pas d'incident collectif/travaux · client à domicile"},
+ speech:"Bonjour, je vérifie votre dossier.",
+ opts:[
+  {l:"Prérequis OK",s:"→ poursuivre"},
+  {l:"Incident collectif/travaux",s:"→ process correspondant"},
+  {l:"Ligne jamais fonctionnée",s:"→ process Installation"},
+  {l:"Ligne suspendue",s:"→ régler factures"}
+ ]},
+{id:"case_check",title:"Vérification case DTF",infra:"Infra Orange",
+ alert:{t:"info",i:"ℹ️",tx:"Vérifier présence case actif affecté à DTF."},
+ speech:"Je vérifie si une intervention est déjà en cours.",
+ opts:[
+  {l:"Case DTF < 24h",s:"→ rassurer + dépannage + note"},
+  {l:"Case DTF > 24h",s:"→ excuses + dépannage + note"},
+  {l:"Aucun case actif DTF",s:"→ poursuivre"}
+ ],
+ fields:[{k:"cc_sit",l:"Situation case",t:"sel",o:["Case DTF <24h","Case DTF >24h","Aucun case actif"]}]},
+{id:"questionnement",title:"Questionnement",infra:"Infra Orange",
+ speech:"La connexion a-t-elle déjà fonctionné ? Depuis quand ? Décrivez les voyants du routeur.",
+ fields:[
+  {k:"deja",l:"Déjà fonctionné ?",t:"sel",o:["Oui","Non — jamais"]},
+  {k:"depuis",l:"Depuis quand",t:"txt",p:"Ex : 12/01 matin"},
+  {k:"desc",l:"Description",t:"ta",p:""}
+ ]},
+{id:"voyants",title:"Voyants + Manipulations",infra:"Infra Orange",
+ alert:{t:"info",i:"💡",tx:"Normal : Power ✅ PON fixe ✅ LOS ❌ Internet clignotant ✅"},
+ speech:"Décrivez-moi les voyants de votre routeur.",
+ voy:{Routeur:["Power","PON","LOS","Internet","2.4G","5G","Phone","LAN"]},
+ opts:[
+  {l:"Cas 1 — Power éteint",s:"→ ON/OFF + rallonge + rebrancher → DTF · 24h"},
+  {l:"Cas 2 — LOS rouge",s:"→ ASSISTANCE VIDÉO · câble jaune routeur + PTO → DTF · 24h"},
+  {l:"Cas 3 — PON éteint/clignotant",s:"→ GPON SN Papyrus + RESET → DTF · 24h"},
+  {l:"Cas 4 — Internet éteint",s:"→ RESET → DTF · 24h"},
+  {l:"Cas 5 — Conformes",s:"→ process Navigation"}
+ ],
+ fields:[
+  {k:"gpon_c",l:"GPON SN client",t:"txt",p:""},
+  {k:"gpon_p",l:"GPON SN Papyrus",t:"txt",p:""},
+  {k:"cas",l:"Cas identifié",t:"sel",o:["Cas 1 — Power éteint","Cas 2 — LOS rouge","Cas 3 — PON éteint","Cas 4 — Internet éteint","Cas 5 — Conformes"]},
+  {k:"manip",l:"Manipulations",t:"ta",p:""}
+ ]},
+{id:"escalade",title:"Codification CRM",infra:"Infra Orange",
+ speech:"Je transmets votre dossier à la DTF. Vous serez contacté dans les 24 heures ouvrées.",
+ opts:[
+  {l:"Service rétabli",s:"→ Résolu · N1"},
+  {l:"Escalade DTF",s:"→ BO ST FTTH B2C → DTF · 24h"}
+ ],
+ fields:[
+  {k:"sip",l:"SIP",t:"txt",req:1},{k:"nom",l:"Nom et Prénom",t:"txt",req:1},
+  {k:"contact",l:"Contact",t:"txt",req:1},{k:"adresse",l:"Adresse",t:"txt"},
+  {k:"date_inc",l:"Date incident",t:"txt",p:"JJ/MM/AAAA"},
+  {k:"gpon",l:"GPON SN",t:"txt"},{k:"dep",l:"Dépannage",t:"sel",o:["Non","Injection data"]},
+  {k:"action",l:"Action finale",t:"sel",o:["Résolu — N1","Escalade DTF"],req:1}
+ ]}
+]},
+
+orange_incident:{label:"Orange — Incident collectif",steps:[
+{id:"prereq",title:"Portail FTTH + Prérequis",infra:"Infra Orange",
+ alert:{t:"danger",i:"🚨",tx:"Incident collectif ET travaux d'aménagement → PRIORISER les travaux. Depuis 20/12/2024 : détection auto dans le CRM (notification Genesys)."},
+ speech:"Je consulte le portail de vérification des incidents FTTH.",
+ opts:[
+  {l:"Incident collectif confirmé portail",s:"→ poursuivre"},
+  {l:"Travaux d'aménagement aussi actifs",s:"→ PRIORISER process Travaux"},
+  {l:"Aucun incident portail",s:"→ basculer process Accès Orange"}
+ ],
+ fields:[
+  {k:"num_ticket",l:"N° ticket portail FTTH",t:"txt",req:1,p:"Ex : 2512009076"},
+  {k:"nature",l:"Nature incident",t:"sel",o:["GPON Down","Service Degrade","Autre"]},
+  {k:"date_debut",l:"Date début",t:"txt",p:"JJ/MM HH:MM"},
+  {k:"statut_inc",l:"Statut",t:"sel",o:["Non Résolu","En cours"]}
+ ]},
+{id:"case_check",title:"Vérification case",infra:"Infra Orange",
+ speech:"Je vérifie si une réclamation est déjà enregistrée.",
+ opts:[
+  {l:"Case actif → NOC FIXE B2C",s:"→ rassurer + note + N° ticket océane + dépannage"},
+  {l:"Case actif NON NOC FIXE B2C",s:"→ rassurer + note + ticket océane + AFFECTER à NOC FIXE B2C"},
+  {l:"Aucun case actif",s:"→ créer case + affecter NOC FIXE B2C"}
+ ],
+ fields:[
+  {k:"cc_sit",l:"Situation case",t:"sel",o:["Case NOC FIXE B2C","Case non NOC","Absent"]},
+  {k:"injection",l:"Injection data",t:"sel",o:["Non","Oui — case parent GP","Oui — injection immédiate ST"]}
+ ]},
+{id:"traitement",title:"Traitement + Codification",infra:"Infra Orange",
+ alert:{t:"info",i:"💬",tx:"Ne s'engager sur AUCUN délai. SMS client à la résolution. Dédommagement uniquement sur demande explicite après résolution."},
+ speech:"Le dérangement est dû à un incident réseau dans votre zone. Nos équipes techniques sont mobilisées pour rétablir le service dans les plus brefs délais. Vous recevrez un SMS dès la résolution. Toutes nos excuses pour ce désagrément.",
+ fields:[
+  {k:"sip",l:"SIP",t:"txt",req:1},
+  {k:"ticket_f",l:"N° ticket incident",t:"txt",req:1},
+  {k:"dep",l:"Dépannage proposé",t:"sel",o:["Non","Injection data","Autre"]},
+  {k:"note",l:"Note case",t:"ta",p:"Ligne HS suite à incident collectif + N° ticket + dépannage"},
+  {k:"statut",l:"Statut case",t:"sel",o:["Actif"]}
+ ]}
+]},
+
+orange_lenteurs:{label:"Orange (infra propre) — Lenteurs & Microcoupures",steps:[
+{id:"prereq",title:"Prérequis",infra:"Infra Orange",
+ alert:{t:"warning",i:"⚠️",tx:"Vérifier : infra Orange · non suspendue · déjà fonctionnée · pas d'incident · voyants normaux. IMPORTANT : Routeur F660 → proposer échange agence GRATUIT sous engagement 12 mois."},
+ speech:"Bonjour, je vérifie votre dossier.",
+ opts:[
+  {l:"Prérequis OK",s:"→ poursuivre"},
+  {l:"Incident collectif / travaux",s:"→ process correspondant"},
+  {l:"Voyants anormaux",s:"→ process Accès"},
+  {l:"Routeur F660",s:"→ proposer échange agence gratuit / 12 mois"}
+ ]},
+{id:"case_check",title:"Vérification case DTF",infra:"Infra Orange",
+ speech:"Je vérifie si un dossier DTF est déjà en cours.",
+ opts:[
+  {l:"Case DTF avec réponse",s:"→ analyser + informer + relancer si persistance"},
+  {l:"Case DTF sans réponse",s:"→ rassurer + excuses si hors délais + note"},
+  {l:"Aucun case actif",s:"→ poursuivre"}
+ ],
+ fields:[{k:"cc_sit",l:"Situation case",t:"sel",o:["Case DTF avec réponse","Case DTF sans réponse","Aucun"]}]},
+{id:"questionnement",title:"Questionnement",infra:"Infra Orange",
+ speech:"Récent ou permanent ? Sur tous les appareils ? WiFi ou câble ? Test de débit effectué ?",
+ fields:[
+  {k:"duree",l:"Récent / permanent",t:"sel",o:["Récent","Permanent"]},
+  {k:"appareils",l:"Appareils",t:"sel",o:["Un seul","Plusieurs","Tous"]},
+  {k:"mode",l:"Mode",t:"sel",o:["WiFi","Câble","Les deux"]},
+  {k:"usage",l:"Usage touché",t:"txt",p:"IPTV / jeux / VPN / Tous"},
+  {k:"anomalie",l:"Anomalie routeur",t:"sel",o:["Aucune","Surchauffe","Bruit","Redémarrage","Voyants anormaux"]}
+ ]},
+{id:"test",title:"Test Papyrus + Diagnostic",infra:"Infra Orange",
+ alert:{t:"warning",i:"⚠️",tx:"Éliminer le point d'accès avant le test."},
+ speech:"Je lance le test Papyrus. Faites aussi speedtest.net en câble direct.",
+ opts:[
+  {l:"Débit NON CONFORME",s:"→ escalade DTF · Lenteur débit · 48h"},
+  {l:"Conforme WiFi — 1 terminal",s:"→ point accès + 5GHz + séparation + canal → DTF si persiste"},
+  {l:"Conforme WiFi — tous appareils",s:"→ point accès + canal + RESET → DTF si persiste"},
+  {l:"Conforme WiFi — IPTV",s:"→ pare-feu LOW + redémarrage → fournisseur IPTV si persiste"},
+  {l:"Conforme Câble — 1 équipement",s:"→ câble + port + équipement + RESET → DTF si persiste"},
+  {l:"Conforme Câble — plusieurs",s:"→ débit partagé + migration → GP si accepte"},
+  {l:"Microcoupures BOOT répétitifs",s:"→ rallonge + autre prise + RESET → DTF"},
+  {l:"Microcoupures VALUE CHANGE",s:"→ escalade DTF · Lenteur débit"}
+ ],
+ fields:[
+  {k:"res_p",l:"Résultat Papyrus",t:"txt",p:"Ex : 200 Mbps"},
+  {k:"res_c",l:"Résultat client",t:"txt",p:"Ex : 15 Mbps"},
+  {k:"pt_acces",l:"Point accès éliminé",t:"sel",o:["Oui","N/A"]},
+  {k:"reset",l:"Reset routeur",t:"sel",o:["Non","Oui","Pas nécessaire"]},
+  {k:"codes",l:"Codes Papyrus",t:"txt",p:"Ex : BOOT répétitifs"}
+ ]},
+{id:"conclusion",title:"Codification CRM",infra:"Infra Orange",
+ speech:"J'enregistre et transmets à la DTF si nécessaire.",
+ opts:[
+  {l:"Résolu",s:"→ file par défaut · Résolu"},
+  {l:"Escalade DTF",s:"→ file DTF · Actif · 48h"}
+ ],
+ fields:[
+  {k:"sip",l:"SIP",t:"txt",req:1},{k:"ndc",l:"NDC",t:"txt"},
+  {k:"adresse",l:"Adresse",t:"txt"},{k:"offre",l:"Offre",t:"txt",p:"Ex: 20 Méga Fibre"},
+  {k:"date",l:"Date début incident",t:"txt",p:"JJ/MM/AAAA"},
+  {k:"titre",l:"Titre case",t:"txt",p:"Ex: Réclamation|Dérangement|Lenteur débit"},
+  {k:"file",l:"File case",t:"sel",o:["File par défaut","DTF"]},
+  {k:"statut",l:"Statut",t:"sel",o:["Résolu","Actif"]},
+  {k:"cmt",l:"Commentaire",t:"ta",p:"Client invité à garder routeur allumé..."}
+ ]}
+]},
+
+orange_install:{label:"Orange (infra propre) — Installation",steps:[
+{id:"prereq",title:"Prérequis + APV",infra:"Infra Orange",
+ alert:{t:"warning",i:"⚠️",tx:"Vérifier dans APV/Orange Shop : infra Orange confirmée. Vérifier systématiquement plaque AUDA (délai 3 semaines). Déménagement → client appelle pour suivi (sinon → TLVE)."},
+ speech:"Je consulte votre dossier d'installation. Pouvez-vous confirmer la date de souscription ?",
+ opts:[
+  {l:"Infra Orange OK — poursuivre",s:""},
+  {l:"Secteur AUDA (zone INWI)",s:"→ délai 3 semaines · informer client"},
+  {l:"Déménagement — saisie non faite",s:"→ transférer TLVE"}
+ ],
+ fields:[
+  {k:"date_s",l:"Date souscription",t:"txt",req:1,p:"JJ/MM/AAAA"},
+  {k:"auda",l:"AUDA ?",t:"sel",o:["Non","Oui — 3 semaines"]},
+  {k:"canal",l:"Canal de vente",t:"sel",o:["POS","Télévente","Porte à porte"]}
+ ]},
+{id:"etat_apv",title:"État commande Orange Shop",infra:"Infra Orange",
+ speech:"Je consulte l'état de votre commande.",
+ opts:[
+  {l:"Inexistant — Porte à porte",s:"→ contacter vendeur / mail coordination"},
+  {l:"Inexistant — Télévente",s:"→ transférer Télévente"},
+  {l:"Inexistant — POS",s:"→ aller en agence"},
+  {l:"En cours — Dossier incomplet / Demande créée",s:"→ escalade LDF · 48h"},
+  {l:"En cours — Pris en charge BO",s:"→ escalade LDF · 48h"},
+  {l:"En cours — Activation lancée",s:"→ escalade BU Fixe B2C"},
+  {l:"Annulé",s:"→ informer + TLV si nouvelle souscription"}
+ ],
+ fields:[
+  {k:"etat",l:"État OS",t:"sel",o:["Demande créée","Dossier incomplet","Pris en charge BO","Activation lancée","Annulé","Inexistant"]},
+ ]},
+{id:"motif",title:"Motif blocage + Délais",infra:"Infra Orange",
+ alert:{t:"info",i:"⏱",tx:"Délais : raccordable < 2j / AUDA < 3 semaines → dans les normes. Au-delà → traiter selon motif."},
+ speech:"Je vérifie les délais et le motif de blocage dans l'APV.",
+ opts:[
+  {l:"Dans les délais — aucun blocage",s:"→ rassurer · N1 · Délai non dépassé"},
+  {l:"Hors délai — Client indisponible",s:"→ RDV J+2 + commentaire APV 'Client disponible'"},
+  {l:"Hors délai — Blocage syndic/passage",s:"→ blocage levé + RDV J+2 + commentaire APV 'Blocage levé'"},
+  {l:"Hors délai — Problème technique Orange",s:"→ escalade DTF"},
+  {l:"Hors délai — Infos manquantes/erronées",s:"→ escalade BU Fixe B2C"},
+  {l:"Hors délai — Annulation/refus/doublon",s:"→ BU Fixe B2C ou DTF selon cas"},
+  {l:"Hors délai — Adresse raccordable erronée",s:"→ DTF modifie adresse"},
+  {l:"Hors délai — Adresse adressable erronée",s:"→ BU Fixe B2C"},
+  {l:"Hors délai — Non fibrée",s:"→ autre techno ADSL/Darbox + TLV"},
+  {l:"Hors délai — Manque CIN",s:"→ informer + RDV J+2 + commentaire APV 'Client dispose CIN'"},
+  {l:"RDV non honoré",s:"→ escalade DTF · RDV non respecté · 48h"},
+  {l:"Installé non activé < 24h",s:"→ patienter · activation auto 24h · routeur allumé"},
+  {l:"Installé non activé > 24h",s:"→ escalade DTF · Test d'acceptance"}
+ ],
+ fields:[
+  {k:"etape",l:"Étape APV",t:"txt",p:"Installation / Activation"},
+  {k:"date_apv",l:"Date création APV",t:"txt",p:"JJ/MM/AAAA"},
+  {k:"motif_f",l:"Motif blocage",t:"txt",p:""},
+  {k:"rdv_date",l:"Date RDV fixée",t:"txt",p:"JJ/MM HH:MM"},
+  {k:"mac",l:"MAC (si applicable)",t:"txt"},{k:"gpon",l:"GPON SN (si applicable)",t:"txt"}
+ ]},
+{id:"codification",title:"Codification CRM",infra:"Infra Orange",
+ speech:"J'enregistre la réclamation et transmets au service concerné.",
+ fields:[
+  {k:"sip",l:"SIP",t:"txt",req:1},{k:"ndc",l:"NDC",t:"txt"},{k:"adresse",l:"Adresse",t:"txt"},
+  {k:"titre",l:"Titre case",t:"txt",p:"Ex: Réclamation|Installation|Retard installation"},
+  {k:"sous_motif",l:"Sous-motif",t:"txt",p:"Ex: Délai non-dépassé"},
+  {k:"file",l:"File case",t:"sel",o:["File par défaut","LDF","BU Fixe B2C","DTF"]},
+  {k:"statut",l:"Statut",t:"sel",o:["Résolu","Actif"]},
+  {k:"note",l:"Note",t:"ta",p:""}
+ ]}
+]}
+};
+
+function renderDiag(){
+  var m=document.getElementById('main');
+  if(FL){
+    renderDiagFlow();
+  } else {
+    m.innerHTML=`
+<div class="ph"><div class="ph-title">Diagnostic guidé</div><div class="ph-sub">Sélectionnez la problématique — process officiel · checklist CRM auto</div></div>
+<div class="diag-cat-intro"><div class="diag-cat-t">Quelle est la problématique ?</div><div class="diag-cat-s">Le parcours suit strictement le process officiel. La checklist CRM est générée à la fin.</div></div>
+<div class="cat-grid">
+  <div class="ccard" onclick="startFlow('partage_acces')"><div class="ce">🔌</div><div class="cn">Partage — Perte d'accès</div><div class="cd">Infra IAM / INWI</div><div class="ctag">5 étapes</div></div>
+  <div class="ccard" onclick="startFlow('partage_lenteurs')"><div class="ce">🐢</div><div class="cn">Partage — Lenteurs</div><div class="cd">Débit · microcoupures</div><div class="ctag">5 étapes</div></div>
+  <div class="ccard" onclick="startFlow('partage_install')"><div class="ce">📦</div><div class="cn">Partage — Installation</div><div class="cd">Retard · activation</div><div class="ctag">4 étapes</div></div>
+  <div class="ccard" onclick="startFlow('orange_acces')"><div class="ce">🔴</div><div class="cn">Orange — Perte d'accès</div><div class="cd">Infra 100% Orange</div><div class="ctag">5 étapes</div></div>
+  <div class="ccard" onclick="startFlow('orange_incident')"><div class="ce">⚠️</div><div class="cn">Orange — Incident collectif</div><div class="cd">Portail FTTH</div><div class="ctag">3 étapes</div></div>
+  <div class="ccard" onclick="startFlow('orange_lenteurs')"><div class="ce">📊</div><div class="cn">Orange — Lenteurs</div><div class="cd">Débit · microcoupures</div><div class="ctag">5 étapes</div></div>
+  <div class="ccard" onclick="startFlow('orange_install')"><div class="ce">🔧</div><div class="cn">Orange — Installation</div><div class="cd">APV · activation</div><div class="ctag">4 étapes</div></div>
+</div>`;
+  }
+}
+
+function startFlow(fid){
+  FL=FD[fid]; SI=0; D={_fid:fid,_flbl:FL.label};
+  FL.steps.forEach(function(s){
+    D[s.id+'_opts']=[];
+    if(s.fields) s.fields.forEach(function(f){D[f.k]=''});
+    if(s.voy) Object.keys(s.voy).forEach(function(g){s.voy[g].forEach(function(v){D['v_'+g+'_'+v]='—'})});
+  });
+  goPage('diag');
+}
+
+function renderDiagFlow(){
+  var m=document.getElementById('main');
+  var t=FL.steps.length, pct=Math.round(((SI+1)/t)*100);
+  var ph=`<div class="ph" style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem">
+    <div><div class="ph-title">${FL.label}</div><div class="ph-sub">Étape ${SI+1}/${t}</div></div>
+    <button class="btn btn-s" onclick="FL=null;renderDiag()">↺ Changer</button>
+  </div>`;
+  var prog=`<div class="prog-wrap show">
+    <div class="pm"><span class="pl">${FL.steps[SI].title}</span><span class="pp">${pct}%</span></div>
+    <div class="pt"><div class="pf" style="width:${pct}%"></div></div>
+    <div class="pdots">${Array.from({length:t},(_,i)=>'<div class="pdot'+(i<SI?' done':i===SI?' cur':'')+'"></div>').join('')}</div>
+  </div>`;
+  var step=FL.steps[SI];
+  var sc=`<div class="step-card"><div class="sh"><div class="sn">${SI+1}</div><div class="st">${step.title}</div><div class="si">${step.infra}</div></div><div class="sb2">`;
+  if(step.alert) sc+=`<div class="alr ${step.alert.t}"><span class="alr-i">${step.alert.i}</span><span>${step.alert.tx}</span></div>`;
+  if(step.speech) sc+=`<div class="spe"><div class="spe-l">🗣 Script</div><div class="spe-t">${step.speech}</div></div>`;
+  if(step.voy){
+    Object.keys(step.voy).forEach(function(g){
+      sc+=`<div class="slbl">${g} — Voyants</div><div class="vgrid">`;
+      step.voy[g].forEach(function(v){
+        var k='v_'+g+'_'+v, cur=D[k]||'—';
+        sc+=`<div class="vit"><div class="vn">${v}</div><select class="vsel" onchange="D['${k}']=this.value">`;
+        ['—','Allumé fixe','Clignotant','Éteint','Rouge'].forEach(function(o){sc+=`<option${cur===o?' selected':''}>${o}</option>`});
+        sc+=`</select></div>`;
+      });
+      sc+=`</div>`;
+    });
+  }
+  if(step.opts&&step.opts.length){
+    sc+=`<div class="slbl">Observations</div><div class="olist">`;
+    step.opts.forEach(function(o){
+      var sel=(D[step.id+'_opts']||[]).includes(o.l);
+      sc+=`<div class="opt${sel?' sel':''}" onclick="togO('${step.id}','${o.l.replace(/'/g,"\\'").replace(/"/g,"&quot;")}',this)"><div class="ocb"><span class="ochk">✓</span></div><div><div class="ot">${o.l}</div>${o.s?`<div class="os">${o.s}</div>`:''}</div></div>`;
+    });
+    sc+=`</div>`;
+  }
+  if(step.fields&&step.fields.length){
+    sc+=`<div class="clf"><div class="clf-t">📋 Checklist CRM à remplir</div>`;
+    step.fields.forEach(function(f){
+      var v=D[f.k]||'';
+      sc+=`<div class="fr"><div class="fl${f.req?' req':''}">${f.l}</div>`;
+      if(f.t==='ta') sc+=`<textarea class="fta" placeholder="${f.p||''}" onchange="D['${f.k}']=this.value" oninput="D['${f.k}']=this.value">${v}</textarea>`;
+      else if(f.t==='sel'){sc+=`<select class="fsl" onchange="D['${f.k}']=this.value">`;(f.o||[]).forEach(function(o){sc+=`<option value="${o}"${v===o?' selected':''}>${o}</option>`});sc+=`</select>`;}
+      else sc+=`<input class="fi" type="text" placeholder="${f.p||''}" value="${v}" oninput="D['${f.k}']=this.value">`;
+      sc+=`</div>`;
+    });
+    sc+=`</div>`;
+  }
+  sc+=`</div></div>`;
+  var nav=`<div class="navbtns">
+    <button class="btn btn-s" onclick="prevStep()" ${SI===0?'disabled':''}>← Précédent</button>
+    <button class="btn btn-p" onclick="nextStep()">${SI===FL.steps.length-1?'✓ Terminer':'Suivant →'}</button>
+  </div>`;
+  m.innerHTML=ph+prog+sc+nav;
+}
+
+function togO(sid,lbl,el){
+  var k=sid+'_opts'; if(!D[k])D[k]=[];
+  var i=D[k].indexOf(lbl);
+  if(i===-1)D[k].push(lbl); else D[k].splice(i,1);
+  el.classList.toggle('sel');
+  el.querySelector('.ocb').innerHTML=D[k].includes(lbl)?'<span class="ochk">✓</span>':'';
+}
+function nextStep(){if(SI===FL.steps.length-1)showFinal();else{SI++;renderDiagFlow();window.scrollTo({top:0,behavior:'smooth'})}}
+function prevStep(){if(SI>0){SI--;renderDiagFlow();window.scrollTo({top:0,behavior:'smooth'})}}
+
+function showFinal(){
+  var act=getAct(), fil=getFil(), del=getDel();
+  var now=new Date();
+  var crm='=== DIAGNOSTIC FTTH — '+now.toLocaleDateString('fr-FR')+' '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+' ===\n';
+  crm+='Problématique : '+D._flbl+'\n\n';
+  FL.steps.forEach(function(s,i){
+    crm+='── ÉTAPE '+(i+1)+' : '+s.title.toUpperCase()+' ──\n';
+    (D[s.id+'_opts']||[]).forEach(function(o){crm+='  ✓ '+o+'\n'});
+    if(s.voy) Object.keys(s.voy).forEach(function(g){s.voy[g].forEach(function(v){var val=D['v_'+g+'_'+v];if(val&&val!=='—')crm+='  '+g+' '+v+' : '+val+'\n'})});
+    if(s.fields) s.fields.forEach(function(f){if(D[f.k])crm+='  '+(f.l)+' : '+D[f.k]+'\n'});
+    crm+='\n';
+  });
+  crm+='═══════════════════════════\n';
+  crm+='ACTION : '+act+'\n';
+  if(fil) crm+='FILE   : '+fil+'\n';
+  crm+='DÉLAI  : '+del+'\n';
+  var tc=D['titre']||D['titre_case']||''; if(tc) crm+='CASE   : '+tc+'\n';
+  var st=D['statut']||''; if(st) crm+='STATUT : '+st+'\n';
+  D._crm=crm;
+  var html=crm
+    .replace(/=== .* ===/g,function(m){return'<span class="H1">'+m+'</span>'})
+    .replace(/── .* ──/g,function(m){return'<span class="H2">'+m+'</span>'})
+    .replace(/^(ACTION|FILE|DÉLAI|CASE|STATUT)/gm,function(m){return'<span class="A">'+m+'</span>'})
+    .replace(/  ✓ .*/g,function(m){return'<span class="V">'+m+'</span>'})
+    .replace(/═+/g,function(m){return'<span class="H2">'+m+'</span>'});
+  var m=document.getElementById('main');
+  m.innerHTML=`
+<div class="ph" style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem">
+  <div><div class="ph-title">${FL.label}</div><div class="ph-sub">Diagnostic terminé</div></div>
+  <button class="btn btn-s" onclick="FL=null;renderDiag()">↺ Nouveau</button>
+</div>
+<div class="sumrow">
+  <div class="sc2"><div class="sc2-l">Action</div><div class="sc2-v or">${act}</div></div>
+  <div class="sc2"><div class="sc2-l">File</div><div class="sc2-v bl">${fil||'—'}</div></div>
+  <div class="sc2"><div class="sc2-l">Délai</div><div class="sc2-v ${del.includes('Clôturé')?'gn':'bl'}">${del}</div></div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
+  <div style="font-weight:700;font-size:.85rem;color:var(--g800)">📋 Checklist à coller dans le CRM</div>
+  <button class="bcopy" id="bc" onclick="doCopy()">📋 Copier</button>
+</div>
+<div class="crmo">${html}</div>`;
+}
+
+function getAct(){
+  var a=D['action']||D['action_f']||'';
+  if(a) return a;
+  var all=[]; FL.steps.forEach(function(s){(D[s.id+'_opts']||[]).forEach(function(o){all.push(o)})});
+  if(all.some(function(o){return/rétabli|résolu|clôtur/i.test(o)})) return 'Clôture N1';
+  if(all.some(function(o){return/DTF/i.test(o)})) return 'Escalade DTF';
+  if(all.some(function(o){return/OI|Partage FTTH N3/i.test(o)})) return 'Escalade OI';
+  if(all.some(function(o){return/NOC/i.test(o)})) return 'NOC FIXE B2C';
+  if(all.some(function(o){return/LDF/i.test(o)})) return 'Escalade LDF';
+  if(all.some(function(o){return/BU Fixe/i.test(o)})) return 'BU Fixe B2C';
+  return 'À qualifier';
+}
+function getFil(){
+  var f=D['file']||D['file_case']||'';
+  if(f&&f!=='File par défaut') return f;
+  var a=getAct();
+  if(/Clôture/.test(a)) return 'File par défaut';
+  if(/DTF/.test(a)&&D._fid==='orange_acces') return 'BO ST FTTH B2C → DTF';
+  if(/DTF/.test(a)) return 'BO ST FTTH B2C → DTF_FTTH_OUT';
+  if(/OI/.test(a)) return 'BO ST FTTH B2C → Partage FTTH N3';
+  if(/NOC/.test(a)) return 'BO ST FTTH B2C → NOC FIXE B2C';
+  if(/LDF/.test(a)) return 'LDF'; if(/BU Fixe/.test(a)) return 'BU Fixe B2C';
+  return '';
+}
+function getDel(){
+  var a=getAct();
+  if(/Clôture/.test(a)) return 'Clôturé';
+  if(/DTF/.test(a)&&D._fid==='orange_acces') return '24h ouvrées';
+  if(/DTF/.test(a)) return '24–48h ouvrées';
+  if(/OI/.test(a)) return '48h ouvrées';
+  if(/NOC/.test(a)) return 'Pas de délai';
+  if(/LDF|BU Fixe/.test(a)) return '48h ouvrées';
+  return 'À préciser';
+}
+
+function doCopy(){
+  if(!D._crm) return;
+  navigator.clipboard.writeText(D._crm).then(function(){
+    var b=document.getElementById('bc');
+    b.textContent='✓ Copié!';b.classList.add('ok');
+    setTimeout(function(){b.textContent='📋 Copier';b.classList.remove('ok')},2500);
+  }).catch(function(){
+    var ta=document.createElement('textarea');ta.value=D._crm;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    document.getElementById('mc').classList.add('show');
+  });
+}
+
+function copyText(txt){
+  navigator.clipboard.writeText(txt).then(function(){
+    document.getElementById('mc').classList.add('show');
+  }).catch(function(){
+    var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    document.getElementById('mc').classList.add('show');
+  });
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+setInterval(function(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('fr-FR')},1000);
+document.getElementById('clock').textContent=new Date().toLocaleTimeString('fr-FR');
+goPage('home');
+</script>
+</body>
+</html>
